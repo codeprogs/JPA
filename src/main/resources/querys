@@ -1,0 +1,39 @@
+-- CREATE TABLE IF NOT EXISTS character(
+--     id UUID PRIMARY KEY,
+--     name VARCHAR (45),
+--     character_type VARCHAR (45),
+--     health_point INT,
+--     mana_point INT,
+--     body_armor_id UUID,
+--     head_armor_id UUID
+-- )
+
+-- CREATE TABLE IF NOT EXISTS head_armor(
+--     id UUID PRIMARY KEY,
+--     name VARCHAR (45),
+--     armor_level INT,
+--     armor_points INT,
+--     armor_type VARCHAR (45)
+-- )
+
+create table public.character (
+                                  id uuid primary key not null,
+                                  character_type character varying(255),
+                                  health_point integer,
+                                  mana_point integer,
+                                  name character varying(255),
+                                  bodyarmor_id uuid,
+                                  headarmor_id uuid,
+                                  foreign key (headarmor_id) references public.head_armor (id)
+                                      match simple on update no action on delete no action,
+                                  foreign key (bodyarmor_id) references public.body_armor (id)
+                                      match simple on update no action on delete no action
+);
+
+create table public.head_armor (
+                                   id uuid primary key not null,
+                                   armor_level integer,
+                                   armor_points integer,
+                                   armor_type character varying(255),
+                                   name character varying(255)
+);
